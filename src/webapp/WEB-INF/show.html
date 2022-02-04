@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User info</title>
+</head>
+<body>
+
+
+<table class="table table-sub-heading-color">
+    <thead>
+    <tr>
+        <th scope="col">name</th>
+        <th scope="col">surname</th>
+        <th scope="col">age </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${user.getName()}"/>
+        <td th:text="${user.getSurname()}"/>
+        <td th:text="${user.getAge()}"/>
+
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

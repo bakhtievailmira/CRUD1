@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New User</title>
+</head>
+<body>
+<form th:method= "POST" action="/CRUD1_war_exploded/users"  th:object="${user}">
+    <label for="name">Введите имя пользователя: </label>
+    <input type="text" th:field="*{name}" id="name"/>
+    <br/>
+    <label for="surname">Введите фамилию пользователя: </label>
+    <input type="text" th:field="*{surname}" id="surname"/>
+    <br/>
+    <label for="age">Введите возраст пользователя: </label>
+    <input type="text" th:field="*{age}" id="age"/>
+    <br/>
+    <input type="submit"    value="Создать"/>
+
+</form>
+</body>
+</html>
