@@ -1,15 +1,18 @@
 package web.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
+
 
 @Configuration
 @EnableWebMvc
@@ -21,6 +24,9 @@ public class WebConfig implements WebMvcConfigurer {
     public WebConfig(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
+
+    @Autowired
+    private Environment env;
 
 
     @Bean
@@ -49,4 +55,5 @@ public class WebConfig implements WebMvcConfigurer {
         registry.viewResolver(resolver);
         resolver.setCharacterEncoding("UTF-8");
     }
+
 }

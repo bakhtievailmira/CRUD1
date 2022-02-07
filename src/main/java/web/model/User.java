@@ -1,22 +1,32 @@
 package web.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "users")
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "surname")
     private String surname;
+
+    @Column(name = "age")
     private int age;
-    private static int count;
+
+
+    public User(){
+    };
 
     public User(String name, String surname, int age) {
-        this.id= ++count;
         this.name = name;
         this.surname = surname;
         this.age = age;
     }
-
-    public User(){
-        this.id= ++count;
-    };
 
     public String getName() {
         return name;

@@ -1,49 +1,60 @@
 package web.dao;
 
 
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import web.model.User;
 
-import java.util.ArrayList;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Component
+@Repository
 public class UserDaoImpl implements UserDao {
-    private List <User> users;
-    {
-        users = new ArrayList<>();
-        users.add(new User("Петя","Петров",11));
-        users.add(new User("Вася","Васин",22));
-        users.add(new User("Михаил","Мишин",55));
-    }
 
 
-    @Override
-    public List<User> index(){
-        return users;
-    }
-
-    @Override
-    public User show(int id){
-        return users.stream().filter(user -> user.getId() == id).findAny().orElse(null);
-    }
+    @Autowired
+    private SessionFactory sessionFactory;
 
     @Override
     public void save(User user) {
-        users.add(user);
-
+        sessionFactory.getCurrentSession().save(user);
     }
 
+
     @Override
-    public void update(int id, User updatedUser){
-    User userToUpdate = show(id);
-    userToUpdate.setAge(updatedUser.getAge());
-    userToUpdate.setName(updatedUser.getName());
-    userToUpdate.setSurname(updatedUser.getSurname());
+    public User show(int id) {
+        User user = (User) sessionFactory.getCurrentSession().get(User.class, id);
+        return user;
+
     }
 
     @Override
     public void delete(int id) {
-        users.removeIf(p -> p.getId() == id);
+        User user = show(id);
+        if (user != null)
+            sessionFactory.getCurrentSession().delete(user);
     }
+
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<User> index() {
+        TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery("from User");
+        return query.getResultList();
+    }
+
+
+    @Override
+    public void update(int id, User updatedUser) {
+        User userToUpdate = show(id);
+        userToUpdate.setAge(updatedUser.getAge());
+        userToUpdate.setName(updatedUser.getName());
+        userToUpdate.setSurname(updatedUser.getSurname());
+        sessionFactory.getCurrentSession().update(userToUpdate);
+    }
+
 }
