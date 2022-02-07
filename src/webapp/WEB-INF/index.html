@@ -10,7 +10,7 @@
     <th:block th:each="msg : ${messages}">
         <h1 th:text="${msg}"></h1>
     </th:block>
-    <form method="get" action="/CRUD1_war_exploded/users" ><button type="submit">Показать список пользователей</button></form>
+    <form method="get" th:action="@{http://localhost:8080/CRUD1_war_exploded/users}" ><button type="submit">Показать список пользователей</button></form>
 </div>
 </body>
 </html>

@@ -5,7 +5,7 @@
     <title>New User</title>
 </head>
 <body>
-<form th:method= "POST" action="/CRUD1_war_exploded/users"  th:object="${user}">
+<form th:method= "POST" th:action="@{http://localhost:8080/CRUD1_war_exploded/users}"  th:object="${user}">
     <label for="name">Введите имя пользователя: </label>
     <input type="text" th:field="*{name}" id="name"/>
     <br/>

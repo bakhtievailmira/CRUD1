@@ -43,7 +43,7 @@ private UserService userService ;
         return "redirect:/users";
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/{id}/edit")
     public String update(@ModelAttribute ("user") User user, @PathVariable ("id") int id){
         userService.update(id, user);
         return  "redirect:/users";

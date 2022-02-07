@@ -1,14 +1,13 @@
 package web.dao;
 
 
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import web.model.User;
 
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Component
@@ -16,18 +15,18 @@ import java.util.List;
 public class UserDaoImpl implements UserDao {
 
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public void save(User user) {
-        sessionFactory.getCurrentSession().save(user);
+        entityManager.persist(user);
     }
 
 
     @Override
     public User show(int id) {
-        User user = (User) sessionFactory.getCurrentSession().get(User.class, id);
+        User user =  entityManager.find(User.class, id);
         return user;
 
     }
@@ -36,15 +35,15 @@ public class UserDaoImpl implements UserDao {
     public void delete(int id) {
         User user = show(id);
         if (user != null)
-            sessionFactory.getCurrentSession().delete(user);
+           entityManager.remove(user);
     }
 
 
     @Override
     @SuppressWarnings("unchecked")
     public List<User> index() {
-        TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery("from User");
-        return query.getResultList();
+
+        return  entityManager.createQuery("from User").getResultList();
     }
 
 
@@ -54,7 +53,7 @@ public class UserDaoImpl implements UserDao {
         userToUpdate.setAge(updatedUser.getAge());
         userToUpdate.setName(updatedUser.getName());
         userToUpdate.setSurname(updatedUser.getSurname());
-        sessionFactory.getCurrentSession().update(userToUpdate);
+        entityManager.merge(userToUpdate);
     }
 
 }
