@@ -8,6 +8,7 @@ import web.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.List;
 
 @Component
@@ -33,9 +34,9 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void delete(int id) {
-        User user = show(id);
-        if (user != null)
-           entityManager.remove(user);
+           Query hql= entityManager.createQuery("delete from User where id=:id");
+           hql.setParameter("id",id);
+           hql.executeUpdate();
     }
 
 
