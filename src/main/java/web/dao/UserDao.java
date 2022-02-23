@@ -12,7 +12,7 @@ public interface UserDao {
 
     public void save(User user);
 
-    void update(int id, User updatedUser);
-
     void delete(int id);
+
+    void update(User updatedUser);
 }

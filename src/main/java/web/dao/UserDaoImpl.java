@@ -34,7 +34,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void delete(int id) {
-           Query hql= entityManager.createQuery("delete from User where id=:id");
+           Query hql = entityManager.createQuery("delete from User where id=:id");
            hql.setParameter("id",id);
            hql.executeUpdate();
     }
@@ -49,12 +49,8 @@ public class UserDaoImpl implements UserDao {
 
 
     @Override
-    public void update(int id, User updatedUser) {
-        User userToUpdate = show(id);
-        userToUpdate.setAge(updatedUser.getAge());
-        userToUpdate.setName(updatedUser.getName());
-        userToUpdate.setSurname(updatedUser.getSurname());
-        entityManager.merge(userToUpdate);
+    public void update(User user) {
+        entityManager.merge(user);
     }
 
 }
